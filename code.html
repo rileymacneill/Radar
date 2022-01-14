@@ -60,69 +60,48 @@
             <div class="row row-cols-1 row-cols-lg-2">
                 <div class="col-lg-8">
                     <pre class="line-numbers"><code class="language-javascript">
-                        //get the values from the UI
-//starts our controller function
-function getValues() {
-    //get values from page
-    let startValue = document.getElementById("startValue").value;
-    let endValue = document.getElementById("endValue").value;
+                        //Console
+function getValue() {
+    //Make sure alert is invisible
+    document.getElementById("alert").classList.add("invisible");
+    //Get user string from page
+    let userString = document.getElementById("userString").value;
+    //Check for Palindrome
+    let returnObj = checkForPalindrom(userString);
+    //Display msg to screen
+    displayMessage(returnObj);
+}
 
-    //parse into Integers
-    startValue = parseInt(startValue);
-    endValue = parseInt(endValue);
+//Check for Palindrome
+function checkForPalindrom(userString) {
+    //Make string lowercase
+    userString = userString.toLowerCase();
+    //Remove spaces and special characters
+    let regex = /[^a-z0-9]/gi;
+    userString = userString.replace(regex, "");
+    //Set arrays/objects
+    let revString = [];
+    let returnObj = {};
+    //Index the string in reverse
+    for (let index = userString.length - 1; index >= 0; index--) {
 
-    if (Number.isInteger(startValue) && Number.isInteger(endValue)) {
-
-        //call generate numbers
-        numbers = generateNumbers(startValue, endValue);
-
-        //call display numbers
-        displayNumbers(numbers);
-
+        revString += userString[index];
+    }
+    //Compare the string to see if the match
+    if (revString == userString) {
+        returnObj.msg = "Well Done! You entered a palindrome!"
     } else {
-        alert("You must enter integers");
+        returnObj.msg = "Sorry, you did not enter a palindrome"
     }
+    returnObj.reversed = revString;
+    return returnObj;
 }
 
-//generate numbers from the start value to the end value
-//logic function(s)
-function generateNumbers(sValue, eValue) {
-
-    let numbers = [];
-
-    //we want to get all numbers from start to end
-    for (let index = sValue; index <= eValue; index++) {
-
-        //this will execute in a loop until index = eValue
-        numbers.push(index);
-    }
-
-    return numbers;
-
-}
-
-//display numbers and mark even numbers bold
-//display or view functions
-function displayNumbers(numbers) {
-
-    let templateRows = "";
-
-    for (let index = 0; index < numbers.length; index++) {
-
-        let className = "even";
-        let number = numbers[index];
-
-        if (number % 2 == 0) {
-            className = "even";
-        } else {
-            className = "odd";
-        }
-        //This does render correctly with Prism see the source
-        templateRows += `<tr><td class="${className}">${number}</td></tr>`;
-    }
-
-    document.getElementById("results").innerHTML = templateRows;
-
+//View function
+function displayMessage(returnObj) {
+    document.getElementById("alertHeader").innerHTML = returnObj.msg;
+    document.getElementById("msg").innerHTML = `Your phrase reversed is: ${returnObj.reversed}`;
+    document.getElementById("alert").classList.remove("invisible");
 }
                         </code>
                     </pre>
@@ -131,15 +110,15 @@ function displayNumbers(numbers) {
                     <p>The Code is structured in three function.</p>
                     <div>
                         <h5>function getValues()</h5>
-                    <p>This function retrieves the values from the HTML page. It then varifies that they are numbers and not arrays. Once confirmed, the numbers are then passed to the next function.</p>
+                        <p>This function retrieves the values from the HTML page. It then passes it onto the next function.</p>
                     </div>
                     <div>
-                        <h5>function generateNumbers()</h5>
-                    <p>This function runs a loop and places the numbers in an array. The array is then used in the following function.</p>
+                        <h5>function checkForPalindrom()</h5>
+                        <p>This function first turns the string to lowercase and removes special characters then runs a loop to reverse a string. An If/Else statement is used to separate the true and false results in objects.</p>
                     </div>
                     <div>
-                        <h5>function displayNumbers()</h5>
-                    <p>This function inputs the array into a table which is printed on the HTML page. The function also bolds all of the even numbers.</p>
+                        <h5>function displayMessage()</h5>
+                        <p>This function returns the results to the page and also unhides the results box.</p>
                     </div>
                 </div>
             </div>
@@ -162,13 +141,16 @@ function displayNumbers(numbers) {
                 <div class="col d-flex align-items-center justify-content-start justify-content-lg-end">
                     <div class="row">
                         <div class="col social">
-                            <a href="https://www.linkedin.com/in/riley-macneill-8080b196/" target="_blank"><i class="fab fa-linkedin fab-2x"></i></a>
+                            <a href="https://www.linkedin.com/in/riley-macneill-8080b196/" target="_blank"><i
+                                    class="fab fa-linkedin fab-2x"></i></a>
                         </div>
                         <div class="col social">
-                            <a href="https://github.com/rileymacneill" target="_blank"><i class="fab fa-github fab-2x"></i></a>
+                            <a href="https://github.com/rileymacneill" target="_blank"><i
+                                    class="fab fa-github fab-2x"></i></a>
                         </div>
                         <div class="col social">
-                            <a href="https://twitter.com/riley_macneill" target="_blank"><i class="fab fa-twitter fab-2x"></i></a>
+                            <a href="https://twitter.com/riley_macneill" target="_blank"><i
+                                    class="fab fa-twitter fab-2x"></i></a>
                         </div>
                     </div>
                 </div>
